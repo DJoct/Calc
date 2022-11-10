@@ -1,3 +1,5 @@
+package calculator;
+
 import java.util.TreeMap;
 
 public class Converter {
@@ -65,6 +67,5 @@ public class Converter {
 
         }
         return result;
-
     }
 }

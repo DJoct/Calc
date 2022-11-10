@@ -1,13 +1,21 @@
+package calculator;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
-    public static void main(String[] args) {
+    public static String calculator() {
         Converter converter = new Converter();
         String[] actions = {"+", "-", "/", "*"};
         String[] regexActions = {"\\+", "-", "/", "\\*"};
         Scanner scn = new Scanner(System.in);
         System.out.print("Введите выражение: ");
         String exp = scn.nextLine();
+        //Считаем сколько символов в строке
+        int count = 0;
+        for (int i=0; i < exp.length();i++) {
+            count++;
+        }
         //Определяем арифметическое действие:
         int actionIndex=-1;
         for (int i = 0; i < actions.length; i++) {
@@ -16,14 +24,15 @@ public class Calculator {
                 break;
             }
         }
+        //Определяем не превышает ли выражение нормы
+        if(count>3) {
+            throw new InputMismatchException("Некорректное выражение");
+        }
         //Если не нашли арифметического действия, завершаем программу
         if(actionIndex==-1){
-            System.out.println("Некорректное выражение");
-            return;
+            throw new InputMismatchException("Некорректное выражение");
         }
         //Делим строчку по найденному арифметическому знаку
-
-
         String[] data = exp.split(regexActions[actionIndex]);
         //Определяем, находятся ли числа в одном формате (оба римские или оба арабские)
         if(converter.isRoman(data[0]) == converter.isRoman(data[1])){
@@ -65,9 +74,15 @@ public class Calculator {
                 System.out.println(result);
             }
         }else{
-            System.out.println("Числа должны быть в одном формате");
+            throw new InputMismatchException("Числа должны быть в одном формате");
         }
 
+    return exp;
+    }
 
+    public static void main(String[] args) {
+        Calculator calculator = new Calculator();
+        calculator();
     }
 }
+
