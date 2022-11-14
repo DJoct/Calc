@@ -4,15 +4,24 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Calculator {
+
+    public static String exp;
+    public static int count;
+
     public static String calculator() {
-        Converter converter = new Converter();
-        String[] actions = {"+", "-", "/", "*"};
-        String[] regexActions = {"\\+", "-", "/", "\\*"};
         Scanner scn = new Scanner(System.in);
         System.out.print("Введите выражение: ");
-        String exp = scn.nextLine();
+        exp = scn.nextLine();
+        return exp;
+    }
+
+    public static void main(String[] args) {
+        calculator();
+        String[] actions = {"+", "-", "/", "*"};
+        String[] regexActions = {"\\+", "-", "/", "\\*"};
+        Converter converter = new Converter();
         //Считаем сколько символов в строке
-        int count = 0;
+        count = 0;
         for (int i=0; i < exp.length();i++) {
             count++;
         }
@@ -76,13 +85,7 @@ public class Calculator {
         }else{
             throw new InputMismatchException("Числа должны быть в одном формате");
         }
-
-    return exp;
     }
 
-    public static void main(String[] args) {
-        Calculator calculator = new Calculator();
-        calculator();
-    }
 }
 
