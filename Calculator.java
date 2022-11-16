@@ -6,25 +6,21 @@ import java.util.Scanner;
 public class Calculator {
 
     public static String exp;
-    public static int count;
+    public static String resulted;
 
-    public static String calculator() {
+    public static String line(String input) {
         Scanner scn = new Scanner(System.in);
         System.out.print("Введите выражение: ");
         exp = scn.nextLine();
         return exp;
     }
 
-    public static void main(String[] args) {
-        calculator();
+    private static String calculator(String input) {
+        line(exp);
         String[] actions = {"+", "-", "/", "*"};
         String[] regexActions = {"\\+", "-", "/", "\\*"};
         Converter converter = new Converter();
-        //Считаем сколько символов в строке
-        count = 0;
-        for (int i=0; i < exp.length();i++) {
-            count++;
-        }
+
         //Определяем арифметическое действие:
         int actionIndex=-1;
         for (int i = 0; i < actions.length; i++) {
@@ -33,10 +29,7 @@ public class Calculator {
                 break;
             }
         }
-        //Определяем не превышает ли выражение нормы
-        if(count>3) {
-            throw new InputMismatchException("Некорректное выражение");
-        }
+
         //Если не нашли арифметического действия, завершаем программу
         if(actionIndex==-1){
             throw new InputMismatchException("Некорректное выражение");
@@ -74,17 +67,24 @@ public class Calculator {
                     result = a/b;
                     break;
             }
+            resulted = Integer.toString(result);
             if(isRoman){
                 //если числа были римские, возвращаем результат в римском числе
                 System.out.println(converter.intToRoman(result));
             }
             else{
                 //если числа были арабские, возвращаем результат в арабском числе
-                System.out.println(result);
+                System.out.println(resulted);
             }
         }else{
             throw new InputMismatchException("Числа должны быть в одном формате");
         }
+
+        return resulted;
+    }
+
+    public static void main(String[] args) {
+        calculator(resulted);
     }
 
 }
